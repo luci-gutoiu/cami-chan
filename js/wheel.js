@@ -1,12 +1,27 @@
 function getOptions() {
-    httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', '../ajax/options.php', true);
-    options = httpRequest.send();
-    return options;
-}
-console.log(getOptions());
+    	var data = null;
+
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function () {
+	  if (this.readyState === 4) {
+	    console.log(this.responseText);
+	  }
+	});
+
+	xhr.open("GET", "http://localhost/ajax/options.php");
+	xhr.setRequestHeader("cache-control", "no-cache");
+
+	xhr.send(data);
+	}
+
+// @todo
+var options = JSON.parse(getOptions());
+console.log(options);
+
 var theWheel = new Winwheel({
-                'numSegments'   : 16,   // Specify number of segments.
+                'numSegments'   : options.size,   // Specify number of segments.
                 'outerRadius'   : 212,  // Set radius to so wheel fits the background.
                 'innerRadius'   : 120,  // Set inner radius to make wheel hollow.
                 'textFontSize'  : 16,   // Set font size accordingly.
