@@ -13,20 +13,28 @@ $.ajax({
     success: setResponse,
 });
 
+var numSeg = 0;
 data.forEach(function (value) {
     segments.push(
-    {'fillStyle': '#'+(Math.random()*0xFFFFFF<<0).toString(16), 'text': value},
+        {
+            'fillStyle': '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
+            'text': value.name,
+            'size': winwheelPercentToDegrees(value.probability)
+        },
     );
+    if (value.probability > 0) {
+        numSeg++;
+    }
 })
 
 var theWheel = new Winwheel({
-    'numSegments': data.length,   // Specify number of segments.
+    'numSegments': numSeg,   // Specify number of segments.
     'outerRadius': 212,  // Set radius to so wheel fits the background.
     'innerRadius': 120,  // Set inner radius to make wheel hollow.
     'textFontSize': 16,   // Set font size accordingly.
     'textMargin': 0,    // Take out default margin.
     'segments':       // Define segments including colour and text.
-        segments,
+    segments,
     'animation':           // Define spin to stop animation.
         {
             'type': 'spinToStop',
@@ -78,5 +86,5 @@ function resetWheel() {
 // -------------------------------------------------------
 function alertPrize(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-    alert("Ai castigat " + indicatedSegment.text);
+    alert("COGRATS! O SA PRIMESTI: " + indicatedSegment.text);
 }
